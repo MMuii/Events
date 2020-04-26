@@ -1,4 +1,4 @@
 module.exports = {
-    mongoURI: 'mongodb+srv://mmui:x012CMNkFo7NT30M@cluster0-nxcih.mongodb.net/test?retryWrites=true&w=majority',
-    cookieKey: 'kluczdocookiesowjakijestkazdywidzi42!3%%@!43',
+    mongoURI: process.env.MONGO_URI,
+    cookieKey: process.env.COOKIE_KEY
 };
