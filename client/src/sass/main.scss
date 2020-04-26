@@ -1,0 +1,53 @@
+@import "./variables.scss";
+@import "./auth.scss";
+@import "./header.scss";
+@import "./dashboard.scss";
+@import "./event_card.scss";
+@import "./create_event.scss";
+@import "./reusable.scss";
+@import "./invite-popup.scss";
+@import "./event_page.scss";
+@import "./comment.scss";
+@import "./account_details.scss";
+@import "./utilities.scss";
+@import "./browse_events.scss";
+@import "./footer.scss";
+
+#root { //glowny component z reacta, jest pod body
+    height: 100%;
+    width: 100%;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+html {
+    font-size: 62.5%; // 1rem = 10px
+}
+
+body {
+    // background: var(--main-background);
+    // background: var(--main-background-gradient);
+    min-height: 100%;
+}
+
+.container {
+    // background-color: #fff;
+    width: 70%;
+    margin: 0 auto;
+    height: 100%;
+    position: relative;
+}
+
+.background-gradient {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--main-background);
+    background: var(--main-background-gradient);
+    z-index: -2137;
+}

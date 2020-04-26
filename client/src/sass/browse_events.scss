@@ -1,0 +1,33 @@
+.browse {
+    &__header {
+        display: grid;
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr repeat(4, min-content);
+        align-items: center;
+
+        span {
+            font-size: 1.6rem;
+            font-weight: 400;
+            margin-left: 1rem;
+            white-space: nowrap;
+            color: #b3b3b3;
+            box-sizing: border-box;
+            justify-self: right;
+            
+            &:nth-child(2), &:nth-child(3) {
+                cursor: pointer;
+            }
+        }
+    }
+
+    &__sort-icon {
+        width: 1.1rem;
+        height: 1.1rem;
+        padding-left: .5rem;
+        fill: var(--dark-grey-font);
+    }
+
+    &__active-sorting {
+        color: var(--dark-grey-font) !important;
+    }
+}

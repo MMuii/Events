@@ -1,0 +1,17 @@
+.footer {
+    font-family: var(--main-font-2);
+    color: #f37281;
+    z-index: -10;
+
+    &__container {
+        position: fixed;
+        top: calc(100% - 4.5rem);
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 1.1rem;
+
+        a {
+            color: #f37281;
+        }
+    }
+}

@@ -1,0 +1,26 @@
+:root {
+    --logo-font: 'Pattaya', sans-serif;
+    --logo-font-2: 'Pacifico', cursive;
+    --main-font: 'Lato', sans-serif;
+    --main-font-2: 'Roboto', sans-serif;
+    // --header-font: 'Concert One', cursive;
+    --header-font: 'Catamaran', sans-serif;
+
+    // --main-background: rgb(253,200,48);
+    // --main-btn-color: rgb(252, 186, 3);
+    // --main-background-gradient: linear-gradient(135deg, rgba(253,200,48,1) 0%, rgba(243,115,53,1) 100%);
+
+    --main-background: rgb(237,33,58);
+    --main-btn-color: rgb(237,33,58);
+    --main-background-gradient: linear-gradient(135deg, rgba(237,33,58,1) 0%, rgba(147,41,30,1) 100%);
+    
+    --default-shadow: 0px 0px 15px 0px rgba(0,0,0,0.2);
+    --default-shadow-light: 0px 0px 10px 0px rgba(0,0,0,0.1);
+
+    --header-height: 7rem;
+
+    --light-grey: #e5e5e5;
+    --medium-light-grey: #d9d9d9;
+    --medium-grey: #cccccc;
+    --dark-grey-font: #4d4d4d;
+}

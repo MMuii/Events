@@ -1,0 +1,68 @@
+.invite-popup {
+    &__link-container {
+        // position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__link-input-container {
+        position: relative;
+        display: flex;
+        align-items: center;
+
+        input {
+            margin-bottom: 0;
+            color: var(--dark-grey-font);
+        }
+
+        button {
+            position: absolute;
+            right: 0;
+            border: 0;
+            height: 100%;
+            border-radius: 15px;
+            background-color: var(--main-btn-color);
+            color: #fff;
+            font-family: var(--main-font-2);
+            font-size: 1.6rem;
+            // padding: 0 2rem;
+            cursor: pointer;
+            width: 15rem;
+
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}
+
+.invite-popup {
+    &__dim-layer {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba($color: #000000, $alpha: 0.4);
+        z-index: 3000;
+    }
+
+    &__container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        // height: 25rem;
+        width: 60rem;
+        background-color: var(--light-grey);
+        box-shadow: var(--default-shadow);
+        border-radius: 15px;
+
+        &--inner {
+            height: 100%;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 2rem;
+        }
+    }
+}

@@ -1,0 +1,50 @@
+.header {
+    &__container {
+        position: fixed;
+        left: 50%;
+        width: 55%;
+        // top: 0;
+        // width: 70rem;
+        height: var(--header-height);
+        margin-top: 2rem;
+        transform: translateX(-50%);        
+        // background-color: #ffb3b3;
+        display: grid;
+        justify-items: center;
+        align-items: center;
+        grid-template-rows: 1fr;
+        // grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    &__button {
+        font-family: var(--main-font);
+        color: #efa9ac;
+        font-size: 1.6rem;
+        font-weight: 700;
+        cursor: pointer;
+        transition: color .15s;
+        white-space: nowrap;
+
+        &:hover {
+            color: #fff;
+        }
+
+        &--logo {
+            font-family: var(--logo-font);
+            font-size: 6rem;
+            line-height: 0;
+            font-weight: 400;
+            color: #fff;
+            grid-column: 3;
+        }
+
+        // &--events {
+        //     // justify-self: right;
+        // }
+
+        // &--account {
+        //     // justify-self: left;
+        // }
+    }
+}

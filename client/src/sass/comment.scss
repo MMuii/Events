@@ -1,0 +1,122 @@
+.comment {
+    &__container-master {
+        display: flex;
+        flex-direction: column;
+        box-sizing: border-box;
+        padding: 1rem;
+        margin: 0 1rem 1rem 1rem;
+        background-color: var(--light-grey);
+        border-radius: 15px;
+        transition: background-color .1s;
+
+        &:first-child {
+            margin-top: 1rem;
+        }
+
+        &:hover {
+            background-color: #e1e1e1;
+        }
+
+        &--pinned {
+            border: 2px solid var(--main-btn-color);
+        }
+    }
+
+    &__container-info {
+        display: flex;
+        justify-content: space-between;
+        font-size: 1.2rem;
+        padding-bottom: .5rem;
+    }
+
+    &__container-social {
+        display: grid;
+        align-items: center;
+        grid-template-rows: 1fr;
+        // grid-auto-columns: min-content;
+        &--approved {
+            grid-template-columns: repeat(3, min-content) 1fr min-content;
+        }
+        
+        &--waiting-admin {
+            grid-template-columns: repeat(2, min-content);
+        }
+
+        &--waiting-user {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            // grid-template-columns: repeat(2, min-content);
+
+            div {
+                font-size: 1.4rem;
+                white-space: nowrap;
+            }
+            // grid-template-columns: ;
+        }
+
+        div {
+            &:nth-child(2), &:nth-child(3) {
+                padding-left: 1.5rem;
+            }
+
+            &:nth-child(3) {
+                white-space: nowrap;
+                cursor: pointer;
+                font-size: 1.4rem;
+            }
+        }
+    }
+
+    &__container-icon {
+        display: flex;
+        align-content: center;
+        cursor: pointer;
+
+        span {
+            padding-left: .5rem;
+            font-size: 1.7rem;
+        }
+
+        &--approve, &--disapprove {
+            span {
+                font-size: 1.4rem;
+            }
+        }
+
+        &--pin, &--delete {
+            justify-content: flex-end;
+        }
+
+        &--pin {
+            padding-right: 1rem;
+        }
+    }
+
+    &__text {
+        font-size: 1.2rem;
+        text-align: justify;
+        padding-bottom: .5rem;
+    }
+
+    &__social {
+        &-icon {
+            height: 1.7rem;
+            width: 1.7rem;
+            fill: var(--dark-grey-font);
+
+            &--delete {
+                justify-self: right;
+            }
+
+            &--approve, &--disapprove {
+                height: 1.5rem;
+                width: 1.5rem;
+            }
+        }
+    }
+}
+
+.pinned, .liked {
+    fill: var(--main-btn-color);
+}
