@@ -16,15 +16,13 @@
     &__header {
         &-container {
             width: 100%;
-            // height: 6rem;
             border-radius: 15px;
             background-color: var(--main-btn-color);
-            display: grid;
-            grid-template-columns: min-content 1fr;
-            grid-template-rows: 1fr;
-            align-items: center;
+            // display: grid;
+            // grid-template-columns: min-content 1fr;
+            // grid-template-rows: 1fr;
+            // align-items: center;
             box-sizing: border-box;
-            // padding: 0 2rem 0 2rem;
             padding: 1rem 2rem;
         }
 
@@ -32,6 +30,10 @@
             &-name {
                 white-space: nowrap;
                 font-size: 2.2rem;
+
+                @include media("<500px") {
+                    white-space: normal;
+                }
             }
         }
 
@@ -61,47 +63,76 @@
         &-container {
             box-sizing: border-box;
             padding: 2.5rem 2rem 2rem 2rem;
-            // display: flex;
             display: grid;
-            grid-template-columns: min-content min-content min-content min-content 1fr min-content min-content;
+            grid-template-columns: repeat(4, min-content) 1fr repeat(2, min-content);
             color: var(--dark-grey-font);
+
+            @include media("<500px") {
+                display: flex;
+                flex-direction: column;
+            }
+
+            &--row, &--row-buttons {
+                display: flex;
+            }
+
+            &--row-buttons {
+                padding-top: 1rem;
+                justify-content: space-around;
+            }
 
             &--inner {
                 position: relative;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                // align-items: flex-end;
-                overflow: hidden;
-                // height: 5rem;
 
                 &-delete {
                     justify-self: right;
                 }
-                
 
-
-                &-invite {
+                &-invite, &-view {
                     justify-content: flex-end;
                     padding-left: 2rem;
+
+                    @include media("<500px") {
+                        width: 100%;
+                    }
 
                     button {
                         border: none;
                         border-radius: 15px;
-                        height: 2.5rem;
+                        // height: 2.5rem;
                         color: #fff;
                         font-family: var(--main-font-2);
                         font-size: 1.4rem;
                         justify-self: right;
                         transition: color .2s;
                         background-color: var(--main-btn-color);
-                        padding-left: 1rem;
-                        padding-right: 1rem;
+                        padding: .5rem 1rem;
                         display: flex;
                         justify-content: center;
                         align-items: center;
                         white-space: nowrap;
                         cursor: pointer;
+
+                        @include media("<500px") {
+                            padding: .5rem 2rem;
+                            // font-size: 1.8rem;
+                            width: 100%;
+                        }
+                    }
+                }
+
+                &-invite {
+                    @include media("<500px") {
+                        padding-left: 2rem;
+                    }
+                }
+
+                &-view {
+                    @include media("<500px") {
+                        padding-left: 0;
                     }
                 }
             }

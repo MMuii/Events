@@ -310,10 +310,12 @@ class EventPage extends Component {
         ? <ArrowDownIcon className="event__sort-icon"/>
         : <ArrowUpIcon className="event__sort-icon" />
 
+        let mql = window.matchMedia("screen and (max-width: 500px)"); 
+
         return (<>
             <div className="default__component-header event__header">
                 {this.props.event.title}
-                {this.state.didUserCreatedEvent && 
+                {(this.state.didUserCreatedEvent && !mql.matches) && 
                     <div onClick={this.deleteEvent}>
                         <span>Delete event</span>
                         <TrashIcon className="event__delete"/>

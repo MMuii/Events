@@ -1,3 +1,4 @@
+@import "./include-media.scss";
 @import "./variables.scss";
 @import "./auth.scss";
 @import "./header.scss";
@@ -25,6 +26,31 @@ html, body {
 
 html {
     font-size: 62.5%; // 1rem = 10px
+
+    @include media(">big", "<=very-big") {
+        font-size: 56.25%;
+    }
+
+    @include media(">medium", "<=big") {
+        font-size: 50%;
+    }
+
+    @include media("<=medium") {
+        font-size: 43.75%;
+    }
+
+    // @include media(">very-small", "<=small") {
+    //     font-size: 37.5%;
+    // }
+
+    
+    // @include media(">tablet", "<=desktop") {
+    //     font-size: 50%;
+    // }
+
+    // @include media(">phone", "<=tablet") {
+    //     font-size: 37.5%;
+    // }
 }
 
 body {
@@ -39,6 +65,22 @@ body {
     margin: 0 auto;
     height: 100%;
     position: relative;
+
+    @include media(">big", "<=very-big") {
+        width: 75%;
+    }
+
+    @include media(">medium", "<=big") {
+        width: 80%;
+    }
+
+    @include media(">small", "<=medium") {
+        width: 85%;
+    }
+
+    @include media("<=small") {
+        width: 95%;
+    }
 }
 
 .background-gradient {

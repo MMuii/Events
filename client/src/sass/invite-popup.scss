@@ -25,9 +25,8 @@
             color: #fff;
             font-family: var(--main-font-2);
             font-size: 1.6rem;
-            // padding: 0 2rem;
             cursor: pointer;
-            width: 15rem;
+            padding: 0 2rem;
 
             &:focus {
                 outline: none;
@@ -52,8 +51,8 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        // height: 25rem;
-        width: 60rem;
+        max-width: 60rem;
+        min-width: 45rem;
         background-color: var(--light-grey);
         box-shadow: var(--default-shadow);
         border-radius: 15px;

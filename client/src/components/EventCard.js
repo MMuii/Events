@@ -23,18 +23,6 @@ class EventCard extends Component {
         }
     }
 
-    // handleParticipation = () => {
-    //     if (this.state.isParticipated) { //unparticipate
-    //         console.log('cancelling participation in event');
-    //         this.setState({ isParticipated: false });
-    //         this.props.cancelParticipation(this.props._id);
-    //     } else { //participate
-    //         console.log('participating in event');
-    //         this.setState({ isParticipated: true });
-    //         this.props.participateInEvent(this.props._id);
-    //     }
-    // }
-
     delete = () => {
         this.props.deleteEvent(this.props.event._id);
     }
@@ -61,21 +49,45 @@ class EventCard extends Component {
                     <div className="card__social-amount">Private</div></>);
             }
         } else {
-            availability = <></>
+            availability = null;
         }
 
-
-        return (
-            <div className="card__container">
-                <div className="card__header-container">
-                    <div className="card__header__user-name">{title}</div>
-                    <div className="card__header__creator">
-                        <div className="card__header__user">Event's organizer: {organizerNickname}</div>
-                        <div className="card__header__date">Event created on {new Date(dateCreated).toLocaleDateString()}</div>
-                    </div>
+        let mql = window.matchMedia("screen and (max-width: 500px)"); 
+        let socials;
+        if (!mql.matches) {
+            socials = (<>
+                <div className="card__social-container--inner">
+                    <UserIcon className="card__social-icon"/>
+                    <div className="card__social-amount">{participants}</div>
                 </div>
-                <div className="card__content">{shortDescription}</div>
-                <div className="card__social-container">
+                <div className="card__social-container--inner">
+                    <CommentIcon className="card__social-icon"/>
+                    <div className="card__social-amount">{comments.length}</div>
+                </div>
+                <div className="card__social-container--inner">
+                    <CalendarIcon className="card__social-icon"/>
+                    <div className="card__social-amount">{new Date(dateCreated).toLocaleDateString()}</div>
+                </div>
+                <div className="card__social-container--inner">
+                    {availability}
+                </div>
+                <div className="card__social-container--inner 
+                                card__social-container--inner-view">
+                    <motion.button whileHover={{ y: -1.5, boxShadow: '0px 3px 6px 0px rgba(0,0,0,0.12)', transition: {duration: .2} }} whileTap={{ outline: 'none', y: 0, boxShadow: '0px 3px 6px 0px rgba(0,0,0,0.05)' }} onClick={() => this.props.history.push(`/event/${urlID}`)}>View event</motion.button>   
+                </div>
+                {renderInviteButton && <div className="card__social-container--inner 
+                                                        card__social-container--inner-invite">
+                    <motion.button whileHover={{ y: -1.5, boxShadow: '0px 3px 6px 0px rgba(0,0,0,0.12)', transition: {duration: .2} }} whileTap={{ outline: 'none', y: 0, boxShadow: '0px 3px 6px 0px rgba(0,0,0,0.05)' }} onClick={() => this.props.settings.showInvitePopup(inviteID)}>Invite to event</motion.button>   
+                </div>}
+                {renderDeleteButton && <div className="card__social-container--inner 
+                                                        card__social-container--inner-delete">
+                    <TrashIcon onClick={this.delete} className="card__social-icon 
+                                                                card__social-icon--delete"/>
+                </div>}
+            </>)
+        } else {
+            socials = (<>
+                <div className="card__social-container--row">
                     <div className="card__social-container--inner">
                         <UserIcon className="card__social-icon"/>
                         <div className="card__social-amount">{participants}</div>
@@ -88,18 +100,41 @@ class EventCard extends Component {
                         <CalendarIcon className="card__social-icon"/>
                         <div className="card__social-amount">{new Date(dateCreated).toLocaleDateString()}</div>
                     </div>
-                    <div className="card__social-container--inner">
+                    {this.props.settings.displayIsPublic && <div className="card__social-container--inner">
                         {availability}
-                    </div>
-                    <div className="card__social-container--inner card__social-container--inner-invite">
+                    </div>}
+                </div>
+                <div className="card__social-container--row
+                                card__social-container--row-buttons">
+                    <div className="card__social-container--inner 
+                                    card__social-container--inner-view">
                         <motion.button whileHover={{ y: -1.5, boxShadow: '0px 3px 6px 0px rgba(0,0,0,0.12)', transition: {duration: .2} }} whileTap={{ outline: 'none', y: 0, boxShadow: '0px 3px 6px 0px rgba(0,0,0,0.05)' }} onClick={() => this.props.history.push(`/event/${urlID}`)}>View event</motion.button>   
                     </div>
-                    {renderInviteButton && <div className="card__social-container--inner card__social-container--inner-invite">
+                    {renderInviteButton && <div className="card__social-container--inner 
+                                                            card__social-container--inner-invite">
                         <motion.button whileHover={{ y: -1.5, boxShadow: '0px 3px 6px 0px rgba(0,0,0,0.12)', transition: {duration: .2} }} whileTap={{ outline: 'none', y: 0, boxShadow: '0px 3px 6px 0px rgba(0,0,0,0.05)' }} onClick={() => this.props.settings.showInvitePopup(inviteID)}>Invite to event</motion.button>   
                     </div>}
-                    {renderDeleteButton && <div className="card__social-container--inner card__social-container--inner-delete">
-                        <TrashIcon onClick={this.delete} className="card__social-icon card__social-icon--delete"/>
+                    {renderDeleteButton && <div className="card__social-container--inner 
+                                                            card__social-container--inner-delete">
+                        <TrashIcon onClick={this.delete} className="card__social-icon 
+                                                                    card__social-icon--delete"/>
                     </div>}
+                </div>
+            </>)
+        }
+
+        return (
+            <div className="card__container">
+                <div className="card__header-container">
+                    <div className="card__header__user-name">{title}</div>
+                    {/* <div className="card__header__creator">
+                        <div className="card__header__user">Organizer: {organizerNickname}</div>
+                        <div className="card__header__date">Created on {new Date(dateCreated).toLocaleDateString()}</div>
+                    </div> */}
+                </div>
+                <div className="card__content">{shortDescription}</div>
+                <div className="card__social-container">
+                    {socials}
                 </div>
             </div>
         )

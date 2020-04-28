@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 class InvitePopup extends Component {
     state = {
-        buttonText: 'Copy to clipboard'
+        buttonText: 'Copy'
     }
 
     copyToClipboard = () => {
@@ -13,7 +13,7 @@ class InvitePopup extends Component {
         document.execCommand('copy');
         this.setState({ buttonText: 'Copied!' }, () => {
             setTimeout(() => {
-                this.setState({ buttonText: 'Copy to clipboard' });
+                this.setState({ buttonText: 'Copy' });
             }, 2000);
         })
     }
@@ -28,7 +28,7 @@ class InvitePopup extends Component {
                             <div className="default__input-label">Share link from below to invite to event</div>
                             <div className="invite-popup__link-input-container">
                                 <button onClick={this.copyToClipboard}>{this.state.buttonText}</button>
-                                <input id="inviteURL" className="default__input-field" type="text" value={`localhost:3000/invitation/${this.props.inviteID}`}/>
+                                <input id="inviteURL" className="default__input-field" type="text" value={`still-citadel-52687.herokuapp.com/invitation/${this.props.inviteID}`}/>
                             </div>
                         </div>
                         <motion.button 

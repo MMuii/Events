@@ -2,9 +2,7 @@
     position: absolute;
     top: calc(4rem + var(--header-height));
     width: 100%;
-    background-color: rgb(229, 229, 229);
-    // height: 100rem;
-    // margin-top: calc(4rem + var(--header-height));
+    background-color: var(--light-grey);
     margin-bottom: 8rem;
     box-shadow: var(--default-shadow);
     border-radius: 15px;
@@ -14,6 +12,10 @@
         width: 100%;
         padding: 3rem;
         box-sizing: border-box;
+
+        @include media("<medium") {
+            padding: 2rem;
+        }
     }
 }
 
@@ -22,6 +24,12 @@
     font-size: 4rem;
     font-weight: 800;
     color: var(--dark-grey-font);
+    line-height: 100%;
+    padding-bottom: 2rem;
+
+    @include media("<medium") {
+        padding-bottom: 1rem;
+    }
 }
 
 .default__input {

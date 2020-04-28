@@ -56,7 +56,7 @@ class Dashboard extends Component {
             return event._user == this.props.auth._id;
         }).map(event => {
             const settings = {
-                displayIsPublic: false,
+                displayIsPublic: true,
                 showInvitePopup: this.showInvitePopup
             }
 
@@ -127,15 +127,15 @@ class Dashboard extends Component {
             <>
             <PopupManager />
             {invite.showInvitePopup && <InvitePopup close={() => this.setState({ invite: {showInvitePopup: false, inviteID: '' }})} inviteID={invite.inviteID}/>}
-            <div className="dashboard__container">
-                <div className="dashboard__container--inner">
+            <div className="default__component-container">
+                <div className="default__component-container--inner">
                     <div className="events__container">
                         <div className="events__hottest">
-                            <div className="events__header">Events you've created</div>
+                            <div className="default__component-header">Events you've created</div>
                             {this.renderCreatedEvents()}
                         </div>
                         <div className="events__your">
-                            <div className="events__header">Events you've joined</div>
+                            <div className="default__component-header">Events you've joined</div>
                             {this.renderParticipatedEvents()}
                             {/* <button onClick={() => this.props.history.push('/create-event')}>Stwórz se event</button>
                             <button onClick={this.props.fetchCreatedEvents}>Fetch created</button>
