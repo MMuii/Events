@@ -6,12 +6,14 @@
     margin-bottom: 8rem;
     box-shadow: var(--default-shadow);
     border-radius: 15px;
+    z-index: 2;
 
     &--inner {
         height: 100%;
         width: 100%;
         padding: 3rem;
         box-sizing: border-box;
+        z-index: 2;
 
         @include media("<medium") {
             padding: 2rem;

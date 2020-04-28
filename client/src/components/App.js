@@ -54,8 +54,8 @@ class App extends Component {
                         <Route exact path="/event/:urlID/:inviteID?" component={EventPage} />
                         <Route component={Error404} />
                     </Switch>
-                    <Footer />
                 </BrowserRouter>
+                <Footer />
             </div>
             )
         }
@@ -78,8 +78,8 @@ class App extends Component {
                         <Route exact path="/browse" component={BrowseEvents} />
                         <Route component={Error404} />
                     </Switch>
-                    <Footer />
                 </BrowserRouter>
+                <Footer />
             </div>
         )
     }
