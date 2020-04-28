@@ -28,7 +28,7 @@ class InvitePopup extends Component {
                             <div className="default__input-label">Share link from below to invite to event</div>
                             <div className="invite-popup__link-input-container">
                                 <button onClick={this.copyToClipboard}>{this.state.buttonText}</button>
-                                <input id="inviteURL" className="default__input-field" type="text" value={`still-citadel-52687.herokuapp.com/invitation/${this.props.inviteID}`}/>
+                                <input id="inviteURL" className="default__input-field" type="text" readOnly value={`still-citadel-52687.herokuapp.com/invitation/${this.props.inviteID}`}/>
                             </div>
                         </div>
                         <motion.button 

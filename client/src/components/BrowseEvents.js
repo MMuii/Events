@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { withRouter } from 'react-router-dom';
 import EventCard from './EventCard';
+import InvitePopup from './InvitePopup';
 
 import { ReactComponent as ArrowUpIcon } from '../icons/arrow-up-icon.svg';
 import { ReactComponent as ArrowDownIcon } from '../icons/arrow-down-icon.svg';
@@ -32,7 +33,10 @@ class BrowseEvents extends Component {
     }
 
     showInvitePopup = (inviteID) => {
-        this.setState({ invite: {showInvitePopup: true, inviteID: inviteID }});
+        // console.log("dziala");
+        this.setState({ invite: {showInvitePopup: true, inviteID: inviteID }}, () => {
+            console.log(this.state);
+        });
     }
 
     changeSorting = (type) => {
@@ -75,31 +79,34 @@ class BrowseEvents extends Component {
     }
 
     render() {
-        const arrow = this.state.sorting.direction == 'desc' 
+        const { invite, sorting } = this.state;
+
+        const arrow = sorting.direction == 'desc' 
                     ? <ArrowDownIcon className="browse__sort-icon"/>
                     : <ArrowUpIcon className="browse__sort-icon" />
-
-        return (
+        
+        return (<>
+            {invite.showInvitePopup && <InvitePopup close={() => this.setState({ invite: {showInvitePopup: false, inviteID: '' }})} inviteID={invite.inviteID}/>}
             <div className="default__component-container">
                 <div className="default__component-container--inner">
                     <div className="default__component-header browse__header">
                         Browse events
                         <span>Sort by:</span>
-                        <span className={this.state.sorting.type == 'participants' ? 'browse__active-sorting' : undefined}
+                        <span className={sorting.type == 'participants' ? 'browse__active-sorting' : undefined}
                               onClick={() => this.changeSorting('participants')}>
                             participants
-                            {this.state.sorting.type == 'participants' && arrow}
+                            {sorting.type == 'participants' && arrow}
                         </span>
-                        <span className={this.state.sorting.type == 'dateCreated' ? 'browse__active-sorting' : undefined}
+                        <span className={sorting.type == 'dateCreated' ? 'browse__active-sorting' : undefined}
                               onClick={() => this.changeSorting('dateCreated')}>
                             date
-                            {this.state.sorting.type == 'dateCreated' && arrow}
+                            {sorting.type == 'dateCreated' && arrow}
                         </span>
                     </div>
                     {this.renderContent()}
                 </div>
             </div>
-        )
+        </>)
     }
 }
 

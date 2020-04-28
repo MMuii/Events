@@ -73,12 +73,15 @@ class InvitationPage extends Component {
                     <div className="card__container">
                         <div className="card__header-container">
                             <div className="card__header__user-name">{title}</div>
-                            <div className="card__header__creator">
+                            {/* <div className="card__header__creator">
                                 <div className="card__header__user">Event created by {organizerNickname}</div>
                                 <div className="card__header__date">On {new Date(dateCreated).toLocaleDateString()}</div>
-                            </div>
+                            </div> */}
                         </div>
                         <div className="card__content">
+                            <div className="default__header--2 no-padding-top">Author</div>
+                            <div>Event created by {organizerNickname}</div>
+                            <div>On {new Date(dateCreated).toLocaleDateString()}</div>
                             <div className="default__header--2">Short description</div>
                             <div>{shortDescription}</div>
                             <div className="default__header--2">Date</div>

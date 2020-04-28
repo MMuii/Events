@@ -72,7 +72,7 @@ class EventPage extends Component {
             }
         } else if (!auth) { //UZYTKOWNIK NIEZALOGOWANY
             //jesli w adresie nie jest podane dodatkowo inviteID
-            if (this.props.match.params.inviteID != event.inviteID) {
+            if (!event.isPublic && this.props.match.params.inviteID != event.inviteID) {
                 newState.errors.cantJoinPrivateEvent = true;
             }
         }
