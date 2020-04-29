@@ -12,19 +12,21 @@ import reducers from './reducers';
 import axios from 'axios';
 import _ from 'lodash';
 
-// import { browserHistory } from 'react-router-dom';
-// import { syncHistoryWithStore } from 'react-router-redux';
+if (process.env.NODE_ENV === 'development') {
+    window.axios = axios;
+    window._ = _;
+}
 
-window.axios = axios;
-window._ = _;
+let middleware = [reduxThunk];
 
-// const store = createStore(reducers, {}, applyMiddleware(reduxThunk));
+if (process.env.NODE_ENV === 'development') {
+    middleware.push(logger);
+}
+
 const store = createStore(reducers, composeWithDevTools(
-    applyMiddleware(reduxThunk, logger)
-    // other store enhancers if any
-  ));
+    applyMiddleware(...middleware)
+));
 
-// export const history = syncHistoryWithStore(browserHistory, store);
 
 ReactDOM.render(
   <Provider store={store}>
@@ -33,8 +35,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-// console.log('our environment is', process.env.NODE_ENV);
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

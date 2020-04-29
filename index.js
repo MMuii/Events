@@ -67,9 +67,17 @@ io.on('connection', socket => {
         console.log('Nowy koment: ', comment)
     });
 
-
     socket.on('approved_comment', comment => {
         socket.broadcast.emit('approved_comment', comment);
+    });
+
+    socket.on('pinned_comment', comment => {
+        socket.broadcast.emit('pinned_comment', comment);
+        console.log('pinned comment');
+    });
+
+    socket.on('unpinned_comment', comment => {
+        socket.broadcast.emit('unpinned_comment', comment);
     });
 });
 

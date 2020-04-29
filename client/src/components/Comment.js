@@ -11,6 +11,7 @@ import { connect } from 'react-redux';
 
 const Comment = (props) => {
     const [isLiked, setLiked] = useState(props.isLiked);
+    const { likes, isPinned, _id, authorName, text, approved, dateCreated, eventId } = props;
 
     const deleteComment = async () => {
         try {
@@ -25,6 +26,15 @@ const Comment = (props) => {
         try {
             await axios.post('/api/pin_comment', { _id: props._id, eventId: props.eventId });
             props.pinComment(props._id);
+            props.socket.emit('pinned_comment', {
+                likes,
+                isPinned,
+                _id,
+                authorName,
+                text,
+                approved,
+                dateCreated
+            });
         } catch (err) {
             alert('Couldnt pin comment, unidentified error');
         }
@@ -34,6 +44,15 @@ const Comment = (props) => {
         try {
             await axios.post('/api/unpin_comment', { _id: props._id, eventId: props.eventId });
             props.unpinComment(props._id);
+            props.socket.emit('unpinned_comment', {
+                likes,
+                isPinned,
+                _id,
+                authorName,
+                text,
+                approved,
+                dateCreated
+            });
         } catch (err) {
             alert('Couldnt unpin comment, unidentified error');
         }
@@ -65,13 +84,13 @@ const Comment = (props) => {
             await axios.post('/api/approve_comment', { _id: props._id, eventId: props.eventId });
             props.approveComment(props._id);
             props.socket.emit('approved_comment', {
-                likes: props.likes,
-                isPinned: props.isPinned,
-                _id: props._id,
-                nickname: props.authorName,
-                content: props.text,
-                approved: props.approved,
-                dateCreated: props.dateCreated
+                likes,
+                isPinned,
+                _id,
+                authorName,
+                text,
+                approved,
+                dateCreated
             });
         } catch (err) {
             alert('Couldnt approve comment, unidentified error');

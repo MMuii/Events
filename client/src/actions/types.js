@@ -5,11 +5,10 @@ export const SHOW_LOGIN_FORM = 'show_login_form';
 export const HIDE_LOGIN_FORM = 'hide_login_form';
 
 export const FETCH_EVENT = 'fetch_event';
-export const FETCH_HOTTEST = 'fetch_hottest'; //prawdopodobnie do usuniecia
 export const FETCH_PUBLIC = 'fetch_public';
-export const FETCH_CREATED = 'fetch_created'; //prawdopodobnie do usuniecia
 export const FETCH_USER_RELATED = 'fetch_user_related';
 
+export const CREATE_EVENT = 'create_event';
 export const DELETE_EVENT = 'delete_event';
 export const PARTICIPATE_IN_EVENT = 'participate_in_event';
 export const CANCEL_PARTICIPATION = 'cancel_participation';

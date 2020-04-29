@@ -137,13 +137,6 @@ class Dashboard extends Component {
                         <div className="events__your">
                             <div className="default__component-header">Events you've joined</div>
                             {this.renderParticipatedEvents()}
-                            {/* <button onClick={() => this.props.history.push('/create-event')}>Stwórz se event</button>
-                            <button onClick={this.props.fetchCreatedEvents}>Fetch created</button>
-                            <button onClick={this.likePost}>Like test</button>
-                            <button onClick={this.logout}>Logout</button>
-                            <button onClick={() => console.log(this.state)}>Show state</button>
-                            <button onClick={() => console.log(this.props)}>Show props</button>
-                            <button onClick={() => this.newPopup('error', 'wiadomosc', 1500)}>New popup</button> */}
                         </div>
                     </div>
                 </div>

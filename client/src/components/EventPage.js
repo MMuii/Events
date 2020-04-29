@@ -34,44 +34,44 @@ class EventPage extends Component {
 
     async componentDidMount() {
         await this.props.fetchEvent(this.props.match.params.urlID);
-        const socket = socketIOClient('https://still-citadel-52687.herokuapp.com/');
+        // const socket = socketIOClient('https://still-citadel-52687.herokuapp.com/');
+        // const socket = socketIOClient('http://localhost:5000/');
+        const socket = socketIOClient(process.env.REACT_APP_SOCKETIO_ENDPOINT);
 
         this.setState({ ...this.state, pendingRequest: false, socket: socket });
         this.setupSockets();
 
-        // console.log('commentsContainer:', commentsContainer);
-
         const { event, auth } = this.props;
 
-        let newState = this.state; //kopiuje initial state 
+        let newState = this.state;
         newState.event = event;
 
-        if (auth) { //UZYTKOWNIK ZALOGOWANY
-            //Czy uzytkownik dolaczyl wczesniej do eventu
+        if (auth) { //USER LOGGED IN
+            //checks if user has already joined the event
             if (auth.participatedEvents.includes(event._id)) { 
                 newState.alreadyJoined = true;
                 newState.joinMsg = 'You have joined the event!';
             }
 
-            //czy uzytkownik stworzyl event
+            //checks if logged user is an organizer of the event
             if (auth._id == event._user) { 
                 newState.didUserCreatedEvent = true;
             }
     
-            //jesli jest, to twórca eventu nie moze do niego dołączyć
+            //if he is, he can't join his event as its organizer
             if (newState.didUserCreatedEvent) { 
                 newState.joinMsg = 'You are the event\'s organizer';
             }
     
-            //nie mozna zobaczyc prywatnego eventu nie bedac z zaproszenia
+            //if event is private, user didn't create it and hasn't joined it yet, he can't see the event... 
             if (!event.isPublic && !auth.participatedEvents.includes(event._id) && !newState.didUserCreatedEvent) { 
-                //jesli w adresie nie jest podane dodatkowo inviteID
+                //...unless he's coming from invitation and event's inviteID is given in URL
                 if (this.props.match.params.inviteID != event.inviteID) {
                     newState.errors.cantJoinPrivateEvent = true;
                 }
             }
-        } else if (!auth) { //UZYTKOWNIK NIEZALOGOWANY
-            //jesli w adresie nie jest podane dodatkowo inviteID
+        } else if (!auth) { //USER NOT LOGGED IN
+            //when user is not logged in, the only way he can see the event is by invitation
             if (!event.isPublic && this.props.match.params.inviteID != event.inviteID) {
                 newState.errors.cantJoinPrivateEvent = true;
             }
@@ -82,6 +82,7 @@ class EventPage extends Component {
             console.log('eventPage props: ', this.props);
         });
 
+        //sorts comments to display them in correct order
         this.props.sortComments(this.state.sorting.type, this.state.sorting.direction);
     }
 
@@ -92,29 +93,25 @@ class EventPage extends Component {
         }
     }
 
-    //scrolls down comments container
-    // scrollDownComments() {
-    //     const commentsContainer = document.getElementById('comments-container');
-    //     commentsContainer.scrollTop = commentsContainer.scrollHeight;
-    // }
-
     //connects websocket and setups its event handlers
     setupSockets() {
         const { socket } = this.state;
-
-        // socket.on('client-test', message => {
-        //     console.log('test po stronie klienta:', message);
-        // });
         
         socket.on('new_comment', comment => {
             this.props.commentEvent(comment);
-            console.log('New comment: ', comment);
         });
 
         socket.on('approved_comment', comment => {
             this.props.approveComment(comment._id);
-            console.log('Approved comment: ', comment);
-        })
+        });
+
+        socket.on('pinned_comment', comment => {
+            this.props.pinComment(comment._id);
+        });
+
+        socket.on('unpinned_comment', comment => {
+            this.props.unpinComment(comment._id);
+        });
     }
 
     changeSorting = (type) => {
@@ -168,27 +165,33 @@ class EventPage extends Component {
         }
     }
 
+    //controlls input forms
     handleChange({ target: { value }}) {
         this.setState({ commentText: value });
     }
 
+    //pushes new popup to popup manager
     newPopup = (type, msg, time) => {
         this.props.showPopup(type, msg);
     
+        //after certain amount of time popup disappears
         setTimeout(() => {
             this.props.hidePopup();
         }, time);
     }
 
+
     commentEvent = async (e) => {
         e.preventDefault();
+
+        //cannot send empty comment
         if (this.state.commentText.length < 1) {
             return;
         }
 
         if (this.props.auth && (this.state.alreadyJoined || this.state.didUserCreatedEvent)) {
             try {
-                //komentarze od admina sa od razu potwierdzone
+                //event organizer's comments are approved by default
                 const approved = this.state.didUserCreatedEvent ? true : false; 
                 const nickname = this.props.auth.nickname;
     
@@ -245,12 +248,12 @@ class EventPage extends Component {
         })
 
         const unpinnedComments = comments.filter((comment) => {
-            //jeśli user stworzyl event to widzi rowniez niezatwierdzone komentarze
+            //if user is event's organizer, he can see unapproved comments
             if (didUserCreatedEvent) {
-                //filtr przepuszcza komentarze niezatwierdzone
+                //unapproved comments can pass through filter
                 return comment.props.isPinned == false; 
             } else {
-                //filr przepuszcza tylko zatwierdzone komentarze, albo niezatwierdzone utworzone przez usera jako czekajace na zatwierdzenie
+                //comments that are approved or unapproved and created by user who isn't event's organizer can pass through filter
                 return (comment.props.isPinned == false && 
                        (comment.props.approved == true) || (comment.props.approved == false && comment.props._user == this.props.auth._id));
             }
@@ -278,7 +281,7 @@ class EventPage extends Component {
                 </div>
             );
         }
-        if (this.state.errors.cantJoinPrivateEvent) { //event jest prywatny, mozna dolaczyc do niego tylko z zaproszenia
+        if (this.state.errors.cantJoinPrivateEvent) { 
             return (
                 <div className="default__component-header">
                     This event is private, you need an invitation to see the event.
@@ -288,14 +291,14 @@ class EventPage extends Component {
 
         const { content, eventDate, participants, comments } = this.props.event;
         let buttonText, btnOnClick, commentsAmount = 0;
-        if (this.props.auth && this.state.alreadyJoined) { //uzytkownik zalogowany i dolaczyl do eventu
+        if (this.props.auth && this.state.alreadyJoined) { //user logged in and already joined event
             buttonText = 'Leave event';
             btnOnClick = this.leaveEvent;
-        } else if (!this.props.auth) { //uzytkownik niezalogowany
+        } else if (!this.props.auth) { //user not logged in
             buttonText = 'Login and join event';
             btnOnClick = this.joinEvent;
         } else if ((this.props.auth && this.state.didUserCreatedEvent) ||
-                    this.props.auth && !this.state.alreadyJoined) { //uzytkownik stworzyl event albo jeszcze nie dolaczyl
+                    this.props.auth && !this.state.alreadyJoined) { //user is logged in and user is event's organizer or hasn't joined event yet
             buttonText = 'Join event';
             btnOnClick = this.joinEvent;
         };
@@ -344,7 +347,6 @@ class EventPage extends Component {
                 </div>
                 <div className="event__comments-container">
                     <div className="event__comments-header-container">
-                        {/* <div className="event__comments-header"> */}
                         <span className="event__comments-header-amount">{commentsAmount}</span>
                         <span className="event__comments-header-text">{commentsAmount == 1 ? 'comment' : 'comments'}</span>
                         <span className="event__comments-header-sort-by">Sort by:</span>
@@ -364,7 +366,6 @@ class EventPage extends Component {
                             date
                             {this.state.sorting.type == 'dateCreated' && arrow}
                         </span>
-                        {/* </div> */}
                     </div>
                     <div className="event__comments-container--inner" id="comments-container">
                         {(this.state.alreadyJoined || this.state.didUserCreatedEvent) 

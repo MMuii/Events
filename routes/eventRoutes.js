@@ -63,8 +63,6 @@ module.exports = app => {
         } else {
             res.send({});
         }
-        // const hottestEvents = await Event.find({}).sort({ participants: -1 }).limit(5);
-        // res.send(hottestEvents);
     });
 
     app.get('/api/fetch_user_related', requireLogin, async (req, res) => {

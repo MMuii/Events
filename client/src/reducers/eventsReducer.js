@@ -1,10 +1,8 @@
-import { FETCH_EVENT, FETCH_HOTTEST, FETCH_PUBLIC, FETCH_CREATED, PARTICIPATE_IN_EVENT, CANCEL_PARTICIPATION, COMMENT_EVENT, DELETE_COMMENT, PIN_COMMENT, UNPIN_COMMENT, LIKE_COMMENT, DISLIKE_COMMENT, APPROVE_COMMENT, DELETE_EVENT, SORT_EVENTS, SORT_COMMENTS, FETCH_USER_RELATED } from '../actions/types';
+import { FETCH_EVENT, FETCH_PUBLIC, CREATE_EVENT, PARTICIPATE_IN_EVENT, CANCEL_PARTICIPATION, COMMENT_EVENT, DELETE_COMMENT, PIN_COMMENT, UNPIN_COMMENT, LIKE_COMMENT, DISLIKE_COMMENT, APPROVE_COMMENT, DELETE_EVENT, SORT_EVENTS, SORT_COMMENTS, FETCH_USER_RELATED } from '../actions/types';
 import _ from 'lodash';
 
 export default function(state = null, action) {
     switch (action.type) {
-        case FETCH_HOTTEST:
-        case FETCH_CREATED:
         case FETCH_EVENT:
         case FETCH_PUBLIC:
         case FETCH_USER_RELATED:
@@ -32,7 +30,12 @@ export default function(state = null, action) {
                 }
             }
         }
-        case DELETE_EVENT:
+        case CREATE_EVENT: {
+            let newArr = state.slice();
+            newArr.push(action.payload);
+            return newArr;
+        }
+        case DELETE_EVENT: {
             let newArr = state.slice(); 
 
             _.remove(newArr, {
@@ -40,6 +43,7 @@ export default function(state = null, action) {
             });
 
             return newArr;
+        }
         case COMMENT_EVENT: {
             let newArr = state.comments.slice();
             newArr.push(action.payload);
