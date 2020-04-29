@@ -1,6 +1,16 @@
 import axios from 'axios';
-import { FETCH_USER, LOGOUT, FETCH_PUBLIC, CREATE_EVENT, PARTICIPATE_IN_EVENT, CANCEL_PARTICIPATION, FETCH_EVENT, SHOW_LOGIN_FORM, HIDE_LOGIN_FORM, COMMENT_EVENT, DELETE_COMMENT, PIN_COMMENT, UNPIN_COMMENT, LIKE_COMMENT, DISLIKE_COMMENT, APPROVE_COMMENT, DELETE_EVENT, SORT_EVENTS, SORT_COMMENTS, SHOW_POPUP, HIDE_POPUP, FETCH_USER_RELATED } from './types';
+//auth related actions
+import { FETCH_USER, LOGOUT, SHOW_LOGIN_FORM, HIDE_LOGIN_FORM } from './types';
+//event related actions
+import { FETCH_PUBLIC, CREATE_EVENT, PARTICIPATE_IN_EVENT, CANCEL_PARTICIPATION, FETCH_EVENT, DELETE_EVENT, FETCH_USER_RELATED } from './types';
+//comment related actions
+import { COMMENT_EVENT, DELETE_COMMENT, PIN_COMMENT, UNPIN_COMMENT, LIKE_COMMENT, DISLIKE_COMMENT, APPROVE_COMMENT } from './types';
+//sorting related actions
+import { SORT_EVENTS, SORT_COMMENTS } from './types';
+//popup related actions
+import { SHOW_POPUP, HIDE_POPUP } from './types';
 
+/////////////////////////////////////////////////////////////////////////////////  AUTH RELATED ACTIONS  /////////////////////////////////////////////////////
 export const showLoginForm = () => {
     return { type: SHOW_LOGIN_FORM };
 }
@@ -20,6 +30,7 @@ export const logout = () => async dispatch => {
     dispatch({ type: LOGOUT });
 }
 
+/////////////////////////////////////////////////////////////////////////////////  EVENT RELATED ACTIONS  /////////////////////////////////////////////////////
 export const createEvent = (title, shortDescription, content, date, isPublic, inviteID, urlID) => async dispatch => {
     const res = await axios.post('/api/create_event', { title, shortDescription, content, date, isPublic, inviteID, urlID });
     dispatch({ type: CREATE_EVENT, payload: res.data });
@@ -58,6 +69,7 @@ export const deleteEvent = (_id) => async dispatch => {
     dispatch({ type: DELETE_EVENT, payload: { _id }});
 }
 
+/////////////////////////////////////////////////////////////////////////////////  COMMENT RELATED ACTIONS  /////////////////////////////////////////////////////
 export const commentEvent = (comment) => {
     return { type: COMMENT_EVENT, payload: comment };
 }
@@ -86,6 +98,7 @@ export const approveComment = (_id) => {
     return { type: APPROVE_COMMENT, payload: { _id } };
 }
 
+/////////////////////////////////////////////////////////////////////////////////  SORTING RELATED ACTIONS  /////////////////////////////////////////////////////
 export const sortEvents = (type, direction) => {
     return { type: SORT_EVENTS, payload: { type, direction } };
 }
@@ -94,6 +107,7 @@ export const sortComments = (type, direction) => {
     return { type: SORT_COMMENTS, payload: { type, direction } };
 }
 
+/////////////////////////////////////////////////////////////////////////////////  POPUP RELATED ACTIONS  /////////////////////////////////////////////////////
 export const showPopup = (type, msg) => {
     return { type: SHOW_POPUP, payload: { type, msg } };
 }

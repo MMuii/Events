@@ -21,13 +21,11 @@ class Register extends Component {
 
         if (nickname.length > 0 && nickname.length < 4) {
             this.props.newPopup('error', 'Nickname must consist of at least 4 characters', 1500);
-            // this.props.showPopup('errorMsg', 'Nickname must consist of at least 4 characters');
             return false;
         }
 
         if (nickname.length > 16) {
             this.props.newPopup('error', 'Nickname must consist of max 16 characters', 1500);
-            // this.props.showPopup('errorMsg', 'Nickname must consist of max 16 characters');
             return false;
         }
 
@@ -46,19 +44,16 @@ class Register extends Component {
 
         if (password.length < 1) {
             this.props.newPopup('error', 'Enter the password', 1500);
-            // this.props.showPopup('errorMsg', 'Enter the password');
             return false;
         }
 
         if (password2.length < 1) {
             this.props.newPopup('error', 'Confirm your password', 1500);
-            // this.props.showPopup('errorMsg', 'Confirm your password');
             return false;
         }
 
         if (!reUppercase.test(password)) {
             this.props.newPopup('error', 'Password must contain at least 1 uppercase and lowercase character', 1500);
-            // this.props.showPopup('errorMsg', 'Password must contain at least 1 uppercase and lowercase character')
             return false;
         }
 
@@ -78,7 +73,7 @@ class Register extends Component {
         e.preventDefault();
         const { email, password } = this.state;
         let { nickname } = this.state;
-        const { showPopup, showLogin } = this.props;
+        const { showLogin } = this.props;
 
         if (!this.validateNickname()) {
             return;
@@ -86,7 +81,6 @@ class Register extends Component {
 
         if (!this.validateEmail()) {
             this.props.newPopup('error', 'Incorrect email!', 1500);
-            // showPopup('errorMsg', 'Incorrect email!');
             return;
         }
 
@@ -109,16 +103,12 @@ class Register extends Component {
         console.log('ERROR:', error);
 
         if (error == true) {
-            // console.log("JEST ERROR NO NIESTETY");
-            // showPopup('errorMsg', message);
             this.props.newPopup('error', message, 1500);
             this.setState({ email: '', password: '', password2: '' });
         } else if (error == false) {
             this.setState({ email: '', password: '', password2: '' });
-            // showPopup('msg', message);
             this.props.newPopup('success', message, 1500);
             showLogin();
-            // history.push('/dashboard');
         }
     }
 

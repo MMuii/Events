@@ -1,4 +1,9 @@
-import { FETCH_EVENT, FETCH_PUBLIC, CREATE_EVENT, PARTICIPATE_IN_EVENT, CANCEL_PARTICIPATION, COMMENT_EVENT, DELETE_COMMENT, PIN_COMMENT, UNPIN_COMMENT, LIKE_COMMENT, DISLIKE_COMMENT, APPROVE_COMMENT, DELETE_EVENT, SORT_EVENTS, SORT_COMMENTS, FETCH_USER_RELATED } from '../actions/types';
+//event related actions
+import { FETCH_EVENT, FETCH_PUBLIC, CREATE_EVENT, PARTICIPATE_IN_EVENT, CANCEL_PARTICIPATION, DELETE_EVENT, FETCH_USER_RELATED } from '../actions/types';
+//comment related actions
+import { COMMENT_EVENT, DELETE_COMMENT, PIN_COMMENT, UNPIN_COMMENT, LIKE_COMMENT, DISLIKE_COMMENT, APPROVE_COMMENT } from '../actions/types';
+//sorting related actions
+import { SORT_EVENTS, SORT_COMMENTS } from '../actions/types';
 import _ from 'lodash';
 
 export default function(state = null, action) {
@@ -54,10 +59,6 @@ export default function(state = null, action) {
             _.remove(newArr, {
                 _id: action.payload._id
             });
-
-            // let newArr = state.comments.filter((comment) => {
-            //     return comment._id != action.payload._id;
-            // }); // WLASNA IMPLEMENTACJA
 
             return { ...state, comments: newArr };
         }

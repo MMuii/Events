@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(
     cookieSession({
         maxAge: 30 * 24 * 60 * 60 * 1000,
-        keys: [keys.cookieKey] //DO ZROBIENIA JEST COOKIE KEY DLA PRODUKCJI
+        keys: [keys.cookieKey]
     })
 )
 
@@ -40,11 +40,10 @@ require('./routes/authRoutes')(app);
 require('./routes/eventRoutes')(app);
 
 if (process.env.NODE_ENV === 'production') {
-    //TUTAJ MA ZNACZENIE CO JEST PIERWSZE - najpierw sprawdza czy request chce np main.js albo main.css, jeśli nie, to odpalają sie kolejne linijki kodu i express zwraca index.html
     //Express will serve up production assets like main.js file or main.css file
     app.use(express.static('client/build'));
 
-    //Express will serve up the index.html if it doesn't recognize the route -- jeśli express nie rozpoznaje routa to zwraca index.html
+    //Express will serve up the index.html if it doesn't recognize the route
     const path = require('path');
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'))
@@ -52,19 +51,12 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 io.on('connection', socket => {
-    console.log('socket connected!');
-
     socket.on('client-test', message => {
         socket.emit('client-test', message);
     });
 
-    socket.on('disconnect', () => {
-        console.log('disconnected');
-    });
-
     socket.on('new_comment', comment => {
         socket.broadcast.emit('new_comment', comment.data);
-        console.log('Nowy koment: ', comment)
     });
 
     socket.on('approved_comment', comment => {
@@ -73,7 +65,6 @@ io.on('connection', socket => {
 
     socket.on('pinned_comment', comment => {
         socket.broadcast.emit('pinned_comment', comment);
-        console.log('pinned comment');
     });
 
     socket.on('unpinned_comment', comment => {

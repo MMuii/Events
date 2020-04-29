@@ -5,11 +5,13 @@ import socketIOClient from 'socket.io-client';
 import * as actions from '../actions';
 import axios from 'axios';
 import _ from 'lodash';
-import DefaultButton from './reusable/DefaultButton';
+
 import { ReactComponent as UserIcon } from '../icons/user-icon.svg';
 import { ReactComponent as TrashIcon } from '../icons/trash-icon.svg';
 import { ReactComponent as ArrowUpIcon } from '../icons/arrow-up-icon.svg';
 import { ReactComponent as ArrowDownIcon } from '../icons/arrow-down-icon.svg';
+
+import DefaultButton from './reusable/DefaultButton';
 import AuthPage from './AuthPage';
 import Comment from './Comment';
 import PopupManager from './PopupManager';
@@ -23,7 +25,7 @@ class EventPage extends Component {
         commentText: '',
         socket: null,
         errors: {
-            cantJoinPrivateEvent: false, //nie mozna zobaczyc eventu bez zaproszenia, bo jest prywatny
+            cantJoinPrivateEvent: false, 
             somethingWrong: false
         },
         sorting: {
@@ -99,6 +101,7 @@ class EventPage extends Component {
         
         socket.on('new_comment', comment => {
             this.props.commentEvent(comment);
+            this.props.sortComments(this.state.sorting.type, this.state.sorting.direction);
         });
 
         socket.on('approved_comment', comment => {

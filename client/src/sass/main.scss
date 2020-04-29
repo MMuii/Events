@@ -14,7 +14,7 @@
 @import "./browse_events.scss";
 @import "./footer.scss";
 
-#root { //glowny component z reacta, jest pod body
+#root {
     height: 100%;
     width: 100%;
 }
@@ -38,29 +38,13 @@ html {
     @include media("<=medium") {
         font-size: 43.75%;
     }
-
-    // @include media(">very-small", "<=small") {
-    //     font-size: 37.5%;
-    // }
-
-    
-    // @include media(">tablet", "<=desktop") {
-    //     font-size: 50%;
-    // }
-
-    // @include media(">phone", "<=tablet") {
-    //     font-size: 37.5%;
-    // }
 }
 
 body {
-    // background: var(--main-background);
-    // background: var(--main-background-gradient);
     min-height: 100%;
 }
 
 .container {
-    // background-color: #fff;
     width: 70%;
     margin: 0 auto;
     height: 100%;

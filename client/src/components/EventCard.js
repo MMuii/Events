@@ -1,27 +1,28 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import * as actions from '../actions';
+import { withRouter } from 'react-router-dom';
+import { motion } from 'framer-motion';
+
 import { ReactComponent as CommentIcon } from '../icons/comment-icon.svg'; 
 import { ReactComponent as TrashIcon } from '../icons/trash-icon.svg';
 import { ReactComponent as PrivateIcon } from '../icons/private-icon.svg';
 import { ReactComponent as PublicIcon } from '../icons/public-icon.svg';
 import { ReactComponent as UserIcon } from '../icons/user-icon.svg';
 import { ReactComponent as CalendarIcon } from '../icons/calendar-icon.svg';
-import { connect } from 'react-redux';
-import * as actions from '../actions';
-import { withRouter } from 'react-router-dom';
-import { motion } from 'framer-motion';
 
 class EventCard extends Component {
-    state = {
-        isParticipated: false
-    }
+    // state = {
+    //     isParticipated: false
+    // }
 
-    componentDidMount() {
-        if (this.props.auth) {
-            if (this.props.auth.participatedEvents.includes(this.props.event._id)) {
-                this.setState({ isParticipated: true });
-            }
-        }
-    }
+    // componentDidMount() {
+    //     if (this.props.auth) {
+    //         if (this.props.auth.participatedEvents.includes(this.props.event._id)) {
+    //             this.setState({ isParticipated: true });
+    //         }
+    //     }
+    // }
 
     delete = () => {
         this.props.deleteEvent(this.props.event._id);
@@ -124,13 +125,13 @@ class EventCard extends Component {
         }
 
         return (
-            <div className="card__container">
+            <div className="card card__container">
                 <div className="card__header-container">
                     <div className="card__header__user-name">{title}</div>
-                    {/* <div className="card__header__creator">
+                    <div className="card__header__creator">
                         <div className="card__header__user">Organizer: {organizerNickname}</div>
                         <div className="card__header__date">Created on {new Date(dateCreated).toLocaleDateString()}</div>
-                    </div> */}
+                    </div>
                 </div>
                 <div className="card__content">{shortDescription}</div>
                 <div className="card__social-container">

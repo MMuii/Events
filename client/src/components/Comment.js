@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
+import axios from 'axios';
+import * as actions from '../actions/';
+import { connect } from 'react-redux';
+
 import { ReactComponent as CommentIcon } from '../icons/comment-icon.svg'; 
 import { ReactComponent as LikeIcon } from '../icons/like-icon.svg';
 import { ReactComponent as TrashIcon} from '../icons/trash-icon.svg';
 import { ReactComponent as PushpinIcon } from '../icons/pushpin-icon.svg';
 import { ReactComponent as AcceptIcon } from '../icons/accept-icon.svg';
 import { ReactComponent as DeleteIcon } from '../icons/delete-icon.svg';
-import axios from 'axios';
-import * as actions from '../actions/';
-import { connect } from 'react-redux';
 
 const Comment = (props) => {
     const [isLiked, setLiked] = useState(props.isLiked);
@@ -18,7 +19,7 @@ const Comment = (props) => {
             await axios.post('/api/delete_comment', { _id: props._id, eventId: props.eventId });
             props.deleteComment(props._id);
         } catch (err) {
-            alert('Couldnt delete comment, unidentified error'); //gdy sie nie uda usunac komentarza
+            alert('Couldnt delete comment, unidentified error'); 
         }
     }
 
@@ -29,7 +30,7 @@ const Comment = (props) => {
             props.socket.emit('pinned_comment', {
                 likes,
                 isPinned,
-                _id,
+                _id, 
                 authorName,
                 text,
                 approved,

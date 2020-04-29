@@ -15,27 +15,28 @@ import BrowseEvents from './BrowseEvents';
 import Error404 from './Error404';
 import Footer from './Footer';
 
-// import socketIOClient from 'socket.io-client';
-
 class App extends Component {
     async componentDidMount() {
         await this.props.fetchUser();
-
-        // this.props.websocketConnect('http://localhost:5000');
-
-        // const socket = socketIOClient('http://localhost:5000');
-        // console.log(socket);
-        // socket.emit('test');
     }
 
     render() {
-        if (this.props.auth == null) { //gdy jeszcze nie wiadomo czy user jest zalogowany
+        if (this.props.auth == null) { //still fetching user
             return (
-                <div>Loading</div>
+                <div className="container">
+                    <div className="background-gradient"></div>
+                    <div className="default__component-container event">
+                        <div className="default__component-container--inner">
+                            <div className="default__component-header">
+                                Loading
+                            </div>
+                        </div>
+                    </div>
+                </div>
             )
         }
 
-        if (this.props.auth == false) {
+        if (this.props.auth == false) { //user not logged in
             return (
                 <div className="container"> 
                 <div className="background-gradient"></div>
@@ -60,7 +61,7 @@ class App extends Component {
             )
         }
 
-        return ( 
+        return (  //user logged in
             <div className="container"> 
                 <div className="background-gradient"></div>
                 <BrowserRouter>

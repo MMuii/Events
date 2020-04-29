@@ -12,13 +12,20 @@ import reducers from './reducers';
 import axios from 'axios';
 import _ from 'lodash';
 
+//binds axios and lodash to window in development
 if (process.env.NODE_ENV === 'development') {
     window.axios = axios;
     window._ = _;
 }
 
+//disables console.log in production
+if (process.env.NODE_ENV === 'production') {
+    window.console.log = function() {}
+}
+
 let middleware = [reduxThunk];
 
+//adds redux logger to middleware in development 
 if (process.env.NODE_ENV === 'development') {
     middleware.push(logger);
 }

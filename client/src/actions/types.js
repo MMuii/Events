@@ -1,4 +1,3 @@
-export const REGISTER_USER = 'register_user';
 export const FETCH_USER = 'fetch_user';
 export const LOGOUT = 'logout';
 export const SHOW_LOGIN_FORM = 'show_login_form';
