@@ -320,29 +320,5 @@ module.exports = app => {
         } catch (err) {
             res.send(err);
         }
-
-        // try {
-        //     await Event.findOne({ _id: req.body.eventId }, (err, event) => {
-        //         let comments = event.comments;
-        //         for (let i = 0; i < comments.length; i++) {
-        //             if (comments[i]._id == req.body._id) {
-        //                 comments[i].likes += 1;
-        //                 event.markModified('comments');
-        //                 event.save();
-        //             }
-        //         }
-
-        //         if (err) throw err;
-        //     });
-
-        //     await User.updateOne(
-        //         { _id: req.user._id },
-        //         { $push: { likedComments: req.body._id }}
-        //     ).exec();
-
-        //     res.send({});
-        // } catch (err) {
-        //     res.send(err);
-        // }
     }); 
 }

@@ -61,7 +61,8 @@ class App extends Component {
             )
         }
 
-        return (  //user logged in
+        //user logged in
+        return (  
             <div className="container"> 
                 <div className="background-gradient"></div>
                 <BrowserRouter>
