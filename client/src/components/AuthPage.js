@@ -1,14 +1,14 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-// import { AnimatePresence } from 'framer-motion';
-import Login from './Login';
-import Register from './Register';
-// import Popup from './Popup';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { withRouter } from 'react-router-dom';
-import PopupManager from './PopupManager';
 import _ from 'lodash';
+
+import Login from './Login';
+import Register from './Register';
+import PopupManager from './PopupManager';
+
 
 class AuthPage extends Component {
     state = {

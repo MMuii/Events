@@ -36,15 +36,18 @@ class EventPage extends Component {
 
     async componentDidMount() {
         await this.props.fetchEvent(this.props.match.params.urlID);
-        // const socket = socketIOClient('https://still-citadel-52687.herokuapp.com/');
-        // const socket = socketIOClient('http://localhost:5000/');
         const socket = socketIOClient(process.env.REACT_APP_SOCKETIO_ENDPOINT);
 
         this.setState({ ...this.state, pendingRequest: false, socket: socket });
         this.setupSockets();
+        this.setAuthBasedSettings();
 
+        //sorts comments to display them in correct order
+        this.props.sortComments(this.state.sorting.type, this.state.sorting.direction);
+    }
+
+    setAuthBasedSettings() {
         const { event, auth } = this.props;
-
         let newState = this.state;
         newState.event = event;
 
@@ -79,13 +82,7 @@ class EventPage extends Component {
             }
         }
 
-        this.setState({ newState }, () => {
-            console.log('eventPage state: ', this.state);
-            console.log('eventPage props: ', this.props);
-        });
-
-        //sorts comments to display them in correct order
-        this.props.sortComments(this.state.sorting.type, this.state.sorting.direction);
+        this.setState({ ...this.state, newState });
     }
 
     //disconnects websocket when component unmounts
@@ -389,9 +386,15 @@ class EventPage extends Component {
         );
     }
 
+    hideLoginForm = () => {
+        console.log('Hiding login form');
+        this.props.hideLoginForm();
+        this.setAuthBasedSettings();
+    }
+
     render() {
         if (this.props.authForm) {
-            return <AuthPage callback={this.props.hideLoginForm} showBackButton={true}/>;
+            return <AuthPage callback={this.hideLoginForm} showBackButton={true}/>;
         }
 
         return (<>
