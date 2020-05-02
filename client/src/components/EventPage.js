@@ -25,8 +25,7 @@ class EventPage extends Component {
         commentText: '',
         socket: null,
         errors: {
-            cantJoinPrivateEvent: false, 
-            somethingWrong: false
+            cantJoinPrivateEvent: false
         },
         sorting: {
             type: 'dateCreated',
@@ -143,8 +142,7 @@ class EventPage extends Component {
                 this.setState({ joinMsg: 'Joined event!',
                                 alreadyJoined: true});
             } catch (err) {
-                this.setState({ joinMsg: 'Couldn\'t join event, unidentified error',
-                                errors: {somethingWrong: true } });
+                this.setState({ joinMsg: 'Couldn\'t join event, unidentified error' });
             }
         }
     }
@@ -160,8 +158,7 @@ class EventPage extends Component {
                 }, 2500);
             })
         } catch (err) {
-            this.setState({ joinMsg: 'Couldn\'t leave event, unidentified error',
-                            errors: {somethingWrong: true } });
+            this.setState({ joinMsg: 'Couldn\'t leave event, unidentified error' });
         }
     }
 
